@@ -96,7 +96,11 @@ const cargarEventListeners = () => {
 
   contenedorCarrito.addEventListener("click", eliminarCurso);
 
-  vaciarCarritoBtn.addEventListener("click", limpiarHTML);
+  vaciarCarritoBtn.addEventListener("click", () => {
+    carritoCompras = [];
+
+    limpiarHTML();
+  });
 };
 
 cargarEventListeners();
