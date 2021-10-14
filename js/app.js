@@ -29,6 +29,10 @@ const limpiarHTML = () => {
   contenedorCarrito.innerHTML = "";
 };
 
+const sincronizarStorage = () => {
+  localStorage.setItem("carrito", JSON.stringify(carritoCompras));
+};
+
 const actualizarDOM = () => {
   limpiarHTML();
 
@@ -50,6 +54,8 @@ const actualizarDOM = () => {
 
     contenedorCarrito.appendChild(row);
   });
+
+  sincronizarStorage();
 };
 
 const agregarCarrito = (infoCurso) => {
@@ -92,13 +98,19 @@ const eliminarCurso = (e) => {
 };
 
 const cargarEventListeners = () => {
+  document.addEventListener("DOMContentLoaded", () => {
+    carritoCompras = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    actualizarDOM();
+  });
+
   listaCursos.addEventListener("click", agregarCurso);
 
   contenedorCarrito.addEventListener("click", eliminarCurso);
 
   vaciarCarritoBtn.addEventListener("click", () => {
     carritoCompras = [];
-
+    sincronizarStorage();
     limpiarHTML();
   });
 };
