@@ -13,6 +13,10 @@ const limpiarHTML = () => {
   }
 };
 
+const sincronizarStorage = () => {
+  localStorage.setItem("carrito", JSON.stringify(articulosCarrito));
+};
+
 const carritoHTML = () => {
   limpiarHTML();
 
@@ -34,6 +38,8 @@ const carritoHTML = () => {
 
     contenedorCarrito.appendChild(row);
   });
+
+  sincronizarStorage();
 };
 
 const leerDatosCurso = (curso) => {
@@ -94,7 +100,15 @@ const cargarEventListeners = () => {
   vaciarCarritoBtn.addEventListener("click", () => {
     articulosCarrito = [];
 
+    sincronizarStorage();
+
     limpiarHTML();
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    articulosCarrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    carritoHTML();
   });
 };
 
